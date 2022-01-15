@@ -9,3 +9,6 @@ sprawdzenei czy wszytsko dziala po sciagnieciu `docker-compose ps`- jezeli w kol
 aby zatrzymac usluge >> `docker-compose down`
 
 wyswietlenie dzialajacych obecnie obrazow >> `docker ps`
+
+selenium https://hub.docker.com/r/selenium/hub
+
