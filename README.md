@@ -73,8 +73,60 @@ services:
             HUB_PORT: 4444
         ports:
             - 6902:5900
-            ```
+ ```
+ 
+ po mojej weryfikacji zmienne hub_host i hub_port nie sa potrzebne dodatkowo lepiej jest uzyc przypisania obiektu `PORT: 4444` zmiast zmiennej `- PORT=4444`
 
 DOKUMENTACJA https://github.com/SeleniumHQ/docker-selenium#selenium-grid-hub-and-nodes
 
 PRZYKLADOWY PLIK https://github.com/SeleniumHQ/docker-selenium/blob/trunk/docker-compose-v3.yml
+
+morzemy lokalnie pobrac sobie plik np https://github.com/SeleniumHQ/docker-selenium/edit/trunk/docker-compose-v3.yml
+
+`wget https://github.com/SeleniumHQ/docker-selenium/edit/trunk/docker-compose-v3.yml`
+
+zmieniamy nazwe `mv docker-compose-v3.yml docker-compose-beta.yml`
+
+zatrzymujemy docker z podaniem w oparciu o ktory plik docker mamy zamknac"
+`docker-compose -f docker-compose.yml down`
+
+mozemy teraz uruchomic docker z innego pliku konfiguracyjnego:
+`docker-compose -f docker-compose-beta.yml up -d`
+
+leprzy dla oka output jest po `docker-compose ps`
+
+lub poprzez konkretny plik compose
+
+`docker-compose -f docker-compose-beta.yml ps`
+
+mozemy uruchomic help danej komendy aby zobaczyc parametry dodatkowe
+
+`docker-compose -f docker-compose-beta.yml down --help`
+
+--remove-orphans >> usuniecie wszystkich contenerow ktore byly uruchomione z palca a nie poprzez docker-compose file
+-v >> usuniecie wszytskich volume ktore zostalo zdefiniowane w pliku docker-compose
+--rmi=all >> usuwa obrazy wszystkie uzywane przez dany file docker-compose
+
+linux >> 
+
+`ls -t` wyswietlenie wedlug czasu modyfikacji
+`ls --size` wyswietlenie wg objetosci
+`ls -l` lista wraz z info na temat modyfikacji
+`ls -a` lista rowniez ukrytych plikow i folderow
+`ls -R` list z rekurencja czyli wszytsko co jest w folderach chaild
+
+mkdir nazwa_foldera  - tworzy folder
+rmdir nazwa_folderu - usuwa folder - pusty
+cp - copy
+mv only move
+
+uruchamianie skryptow bashowych poprzez komendy:
+bash nazwa_pliku
+sh nazwa_pliku
+./nazwa_pliku
+
+sudo = suoer user do
+jezeli przezucimy skrypt bashowy do /usr/bin bedzie on widzialny wszedzie i mozliwy do odpalenia
+
+-r is for reversing command output, -R is a recursive argument
+
