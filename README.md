@@ -50,7 +50,7 @@ dodajemy parametr environment do docker-compose
                 
  niestety to nie dziala i mam rozazanie ktore dziala
  
- 
+ ```yml
  version: '3'
 services:
     selenium-hub:
@@ -73,6 +73,7 @@ services:
             HUB_PORT: 4444
         ports:
             - 6902:5900
+            ```
 
 DOKUMENTACJA https://github.com/SeleniumHQ/docker-selenium#selenium-grid-hub-and-nodes
 
