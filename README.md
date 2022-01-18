@@ -130,3 +130,56 @@ jezeli przezucimy skrypt bashowy do /usr/bin bedzie on widzialny wszedzie i mozl
 
 -r is for reversing command output, -R is a recursive argument
 
+tworzymy docker-compose-tests.yml w ktorym okreslamy co ma sie zadziac - instalacja node
+
+```yml
+version: '3'
+services:
+  test: #nazwa serwisu
+    build: ./docker/node #okreslamy polozenie Dockerfile
+    volumes:
+      - ./tests/spec:/app/spec #okreslamy co bedziemy potrzebowac czyli z ./tests/spec bierzemy zawartosc i w obrazie bedzie to dostepne w /app/spec
+    entrypoint: ["node", "./node_modules/jasmine/bin/jasmine.js"] #jasmine zarzadza testami
+    environment: ["APP_URL"]
+
+```
+
+
+Dockerfile - okreslamy w nim co chcemy zainstalowac itd
+```yml
+FROM node:15
+WORKDIR /app
+RUN npm install selenium-webdriver && \
+    npm install jasmine
+```
+
+uruchamiamy build `docker-compose -f docker-compose-tests.yml build`
+
+jak sie uruchomi to mozely wejsc do obrazu poprzez `docker run --rm -it selenium_test bash`
+
+mozemy wyszukac nasz plik sciagniety jasmine.js `find | grep jasmine.js`
+
+wychodzimy z obrazu `exit`
+
+uruchamiany naszego huba `docker-compose -f docker-compose.yml up -d`
+
+i uruchamiamy nasz test
+
+
+`docker-compose -f docker-compose-tests.yml run --rm test spec/test01.js`
+
+aby w docker uruchomic jakakolwiek aplikacje robimy to przez podanei danych sieciowych `docker run -d --net selenium_default << to jest widoczna nazwa po zatrzymaniu naszego huba uruchamiana_aplikacja`
+`docker run -d --net selenium_default nginx:1.19`
+
+docker ps >> listowanie images
+
+`docker inspect 23ff` 23ff to id naszego nginx
+na koncu bedziemy widziec IPAdress ktory musimy przekazac jako zmienna srodowiskowa APP_URL
+   
+`APP_URL=http://172.31.0.1 docker-compose -f .\docker-compose-tests.yml run --rm test spec/test02.js`  << to jest wedlug kursu natomiast na moim srodowisku wywala sie ze nie zna komendy APP_URL
+
+zadzialalo jak przekazalem zmienna na koncu podobnie jak argumenty przy odpalaniu modolow w python
+
+ `docker-compose -f .\docker-compose-tests.yml run --rm test spec/test02.js APP_URL=http://172.31.0.1`
+ 
+ 
