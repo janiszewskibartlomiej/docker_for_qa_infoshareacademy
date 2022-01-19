@@ -1,0 +1,8 @@
+version: '3'
+services:
+  test:
+    build: ./docker/node
+    volumes:
+      - ./tests/spec:/app/spec
+    entrypoint: ["node", "./node_modules/jasmine/bin/jasmine.js"]
+    environment: ["APP_URL"]
