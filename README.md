@@ -182,4 +182,35 @@ zadzialalo jak przekazalem zmienna na koncu podobnie jak argumenty przy odpalani
 
  `docker-compose -f .\docker-compose-tests.yml run --rm test spec/test02.js APP_URL=http://172.31.0.1`
  
- 
+ Analogicznei tworzymy testy w python >> tests-py
+a Dockerfile w docker/python + requirements.txt do instalacji i build
+docker-compose-tests-py.yml w katalogu selenium
+
+W samych testach trzeba pamiętać aby używać webdriver.Remote z adresem 'http://selenium-hub:4444/wd/hub'
+
+odpalenie testów za pomoca:
+
+trzeba uruchomic naszego dockera dla selenium python `docker-compose -f .\docker-compose-tests-py.yml build`
+
+`docker-compose -f docker-compose.yml -f docker-compose-tests-py.yml run --rm test ./tests/test01.py`
+
+
+PLantUML in docker
+
+Tworzymy 2 pliki uml z dokumentacji - przykłady są w katalogu plantuml
+
+Renderowanie pliku uml do formatu svg lub png:
+
+`cat 1.uml | docker run --rm -i think/plantuml > 1.svg` # -i oznacza przekazanie cat 1.uml think/plantuml poprzez standart input
+
+`cat 1.uml | docker run --rm -i think/plantuml -t png > 1.png` # --rm remove after run wszystko - czyszczenie wszytskiego
+
+mozemy to zbaczyc uruchamiajac nginx w docker:
+
+docker run -d -p 80:80 -v ${pwd}:/usr/share/nginx/html nginx:1.19  # -v oznacza bierzacy katalog w ktorym jestesmy wiec musimy byc w /plantuml siezka po pwd jest brana z dokumentacji
+
+`curl ifconfig.co` w odp dostajemy adres ip naszej maszyny - zewnetrzny
+
+lepiej skorzystac z obrazu docker plantuml
+
+`docker run -d -p 8080:8080 plantuml/plantuml-server:jetty`
