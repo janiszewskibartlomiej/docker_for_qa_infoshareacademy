@@ -15,3 +15,7 @@ RUN - uruchamia komendy z naszego obrazu 'FROM'
 nastepnie musimy zbudowac obraz na podstawie naszego Dockerfile
 
 `docker build -t exercise1:v1 .`  - exercise1 to nasza nazwa a v1 to nasz tag ktory nam pomorze w odwolywaniu sie ; kropka oznacza bierzaca lokalizacje
+
+ADD pozwala dodac jakies pliki lub z URL do kontenera
+
+`docker build -t exercise2:v2 ${pwd}`
